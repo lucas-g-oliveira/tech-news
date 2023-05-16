@@ -1,4 +1,5 @@
-from requests import exceptions, get
+import requests
+from parsel import Selector
 import time
 
 
@@ -6,19 +7,23 @@ import time
 def fetch(url):
     time.sleep(1)
     try:
-        response = get(
+        response = requests.get(
             url=url, headers={"user-agent": "Fake user-agent"}, timeout=3
         )
         if response.status_code != 200:
             return None
         return response.text
-    except (Exception, exceptions.Timeout):
+    except (Exception, requests.exceptions.Timeout):
         return None
 
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(html_content)
+    links = selector.css(
+        "article .post-inner .cs-overlay-link::attr(href)"
+    ).getall()
+    return links
 
 
 # Requisito 3
