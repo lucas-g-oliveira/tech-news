@@ -1,4 +1,5 @@
 from tech_news import database
+from datetime import datetime as time
 
 
 # Requisito 7
@@ -14,7 +15,18 @@ def search_by_title(title):
 
 # Requisito 8
 def search_by_date(date):
-    """Seu código deve vir aqui"""
+    try:
+        d, m, y = [int(i) for i in str(date).split("-")[::-1]]
+        param = time(year=y, month=m, day=d).strftime("%d/%m/%Y")
+        data = []
+        all_news = database.find_news()
+        for news in all_news:
+            if news["timestamp"] == param:
+                x = {"title": news["title"], "url": news["url"]}
+                data.append(tuple(x.values()))
+        return data
+    except Exception:
+        raise ValueError("Data inválida")
 
 
 # Requisito 9
@@ -28,4 +40,4 @@ def search_by_category(category):
     return data
 
 
-# print(search_by_title("notícia bacana 2"))
+# print(search_by_date("2022-04-07"))
