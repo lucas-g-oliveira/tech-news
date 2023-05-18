@@ -19,7 +19,13 @@ def search_by_date(date):
 
 # Requisito 9
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    data = []
+    all_news = database.find_news()
+    for news in all_news:
+        if str(category).lower() in str(news["category"]).lower():
+            x = {"title": news["title"], "url": news["url"]}
+            data.append(tuple(x.values()))
+    return data
 
 
 # print(search_by_title("notícia bacana 2"))
