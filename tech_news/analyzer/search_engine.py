@@ -38,6 +38,3 @@ def search_by_category(category):
             x = {"title": news["title"], "url": news["url"]}
             data.append(tuple(x.values()))
     return data
-
-
-# print(search_by_date("2022-04-07"))
